@@ -21,12 +21,13 @@ const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 app.get('/', (req, res) => {
     //NOTHING TO DO HERE AT THE MOMENT
+    res.render('homepage', {title: 'Custom Object Homepage | Integrating With HubSpot I Practicum'});
 });
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
 // * Code for Route 2 goes here
-app.get('/update-cobj', async (req, res) => {
+app.get('/update-cobj', (req, res) => {
     res.render('updates', {title: 'Update Custom Object Form | Integrating With HubSpot I Practicum'});
 });
 
@@ -35,8 +36,37 @@ app.get('/update-cobj', async (req, res) => {
 
 // * Code for Route 3 goes here
 
+app.post('/update-cobj', async (req, res) => {
+    
+    const objData = {
+        properties: {
+            "name": req.body.name,
+            "brand": req.body.brand,
+            "model": req.body.model,
+            "color": req.body.color
+        }
+    }
+    
+    const headers = {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+    }
+    
+    const objectId = '2-170462975';
+    
+    const createObject = `https://api.hubspot.com/crm/v3/objects/${objectId}`;
+
+    try {
+        await axios.post(createObject, objData, { headers });
+        const backURL= '/';
+        res.redirect(backURL);
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 /** 
-* * This is sample code to give you a reference for how you should structure your calls. 
+* * This is sample code to give you a reference for how you should structure your calls.
 
 * * App.get sample
 app.get('/contacts', async (req, res) => {
