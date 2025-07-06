@@ -58,3 +58,11 @@ input[type="submit"] {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+tr:nth-child(even) {
+    background-color: #D6EEEE;
+}
+
+th {
+    background-color: #D68888;  
+}

@@ -19,9 +19,25 @@ const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 
 // * Code for Route 1 goes here
 
-app.get('/', (req, res) => {
-    //NOTHING TO DO HERE AT THE MOMENT
-    res.render('homepage', {title: 'Custom Object Homepage | Integrating With HubSpot I Practicum'});
+app.get('/', async (req, res) => {
+
+    const headers = {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        'Content-Type': 'application/json'
+    }
+    
+    const objectId = '2-170462975';
+    
+    const getObjects = `https://api.hubspot.com/crm/v3/objects/${objectId}?properties=name,brand,model,color`;
+
+    try {
+        const response = await axios.get(getObjects, { headers } );
+        const data = response.data.results;
+        res.render('homepage', { title: 'Custom Object Homepage | Integrating With HubSpot I Practicum', data });
+    } catch (error) {
+        console.error(error);
+    } 
+
 });
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
