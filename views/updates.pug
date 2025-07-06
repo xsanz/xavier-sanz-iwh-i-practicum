@@ -1,8 +1,21 @@
 doctype html 
 html(lang="en")
     head 
-        title = `${title}`
+        title !{title}
         meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/css/styles.css")
+        link(rel="stylesheet", href="/css/style.css")
     body 
         a(href='/') Return to the homepage
+        p User: #{userEmail}
+        form(method="POST").form-wrapper 
+            fieldset 
+                legend Provide Car Information
+                label(for="name") Car Name 
+                input(type="text" name="name" required)
+                label(for="brand") Car Brand 
+                input(type="text" name="brand" required)
+                label(for="model") Car Model
+                input(type="text" name="model" required)
+                label(for="color") Car Color 
+                input(type="text" name="name" required)            
+                input(type="submit" value="Save Car Information")
